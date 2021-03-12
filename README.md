@@ -49,6 +49,6 @@ We need to have 1 singular response variable y and we can have as many explanato
 
 -the comparison groups: other bike companies? 
 
--
+- 
 
-- the method(s) we will be using to answer our research questions will be 
+- the method(s) we will be using to answer our research questions will be experiments, surveys, interviews, and observations
