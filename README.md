@@ -33,7 +33,7 @@ Data can be directly extrapolated from the Bikeshare portal on seven major metro
 Data was initially processed to track the system as well as remove trips that are taken by staff as they service or inspect the system. Also has a development plan survey every few years to assess usage trends and plans.
 
 The data is gauged in pertinence to evaluating the average BikeShare usage in major cities as a means to elucidate upon  future models in respect to subjective time-intervals. Through evaluating various subsets pertaining to the 7 recorded cities, we can build predictive models based on subjective attributes that lend to a wider propensity of BikeShare usage. Thus, the research question serves as a precursor in gaining insight to not just building optimal models based on longevity, but also factors for maintenance, trends, etc.
-
+ 
 
 #Section 2 Data: 
 
@@ -43,7 +43,7 @@ So once we find the data we want to use we just have to import it to Github whic
 
 We need to have 1 singular response variable y and we can have as many explanatory variables x as we want. So just have to divide that up.
 
--Our response variable will be the amount of revenue brought in from big cities
+-Our response variable will be based on passes, distance of bikeshare intervals per city
 
 Data variables:
 - Trip start day and time
