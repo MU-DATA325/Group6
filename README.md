@@ -32,7 +32,7 @@ Currently they are being used in major cities, privately, and in universities fo
 Data has been collected through member surveys, as well as documentation through apps when the information is taken by recipients electronically. 
 Data was initially processed to track the system as well as remove trips that are taken by staff as they service or inspect the system. Also has a development plan survey every few years to assess usage trends and plans. 
 
-For our research question we will be asking "Where can they expand to next?" Given the variables and cases, where is the next big city that Bikeshare could take there business? 
+For our research question we will be asking "Where can they expand to next?" Given the variables and cases, where is the next big city that Bikeshare could take their business? 
 
 
 #Section 2 Data: 
