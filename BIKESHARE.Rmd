@@ -5,6 +5,13 @@ output: "html_document"
 # Bikeshare Data Project -Group 6
 # MU-DATA 325 Dr. Andrew O. Hall
 ---
+
+```{r load-pkg, message = FALSE}
+library(tidyverse)
+library(skimr)
+library(readr)
+```
+
 # Group6
 
 Capital Bike share 
@@ -32,9 +39,7 @@ Can base the research question off of the theory above
 
 
 ```{r}
-library(readr)
-metro_trips_2020_q4 <- read_csv("metro-trips-2020-q4.csv")
-View(metro_trips_2020_q4)
+trips <- read_csv("metro-trips-2020-q4.csv")
 ```
 
 
@@ -75,4 +80,4 @@ Data variables:
 - 
 
 - the method(s) we will be using to answer our research questions will be experiments, surveys, interviews, and observations
->>>>>>> 75a1f3d125a3bf70e5e033491322a5afede19cc4
+
