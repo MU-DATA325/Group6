@@ -24,6 +24,13 @@ Time
 Can base the research question off of the theory above
 
 
+```{r}
+library(readr)
+metro_trips_2020_q4 <- read_csv("metro-trips-2020-q4.csv")
+View(metro_trips_2020_q4)
+```
+
+
 #Section 1 Introduction: 
 
 The idea of Bikeshare was created in Amsterdam, Netherlands in 1965 and didn't come to the United States until much later. Portland Oregon in 1994 adopted the first community bike project in the United States, but they really are only active in major cities. 
