@@ -13,7 +13,7 @@ Capital Bike share
 
 Washington
 Boston
-Los Angeles 
+Los Angeles = Metro-Trips-2020-Q4
 New York
 Chicago
 Philadelphia
@@ -71,4 +71,3 @@ Data variables:
 - 
 
 - the method(s) we will be using to answer our research questions will be experiments, surveys, interviews, and observations
-125a3bf70e5e033491322a5afede19cc4
