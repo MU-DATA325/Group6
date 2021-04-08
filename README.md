@@ -32,11 +32,6 @@ Time
 Can base the research question off of the theory above
 
 
-```{r}
-library(readr)
-metro_trips_2020_q4 <- read_csv("metro-trips-2020-q4.csv")
-View(metro_trips_2020_q4)
-```
 
 
 #Section 1 Introduction: 
