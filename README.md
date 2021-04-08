@@ -10,6 +10,7 @@ output: "html_document"
 Capital Bike share 
 
 7 Cities w/ data:
+
 Washington
 Boston
 Los Angeles 
@@ -18,7 +19,7 @@ Chicago
 Philadelphia
 San Francisco
 
-We can compare and contrast the Bikeshare data between each country by looking at different variables offered:
+We can compare and contrast the Bikeshare data between each city by looking at different variables offered:
 
 Usage differences per major city
 Start times/Stop times
@@ -75,4 +76,4 @@ Data variables:
 - 
 
 - the method(s) we will be using to answer our research questions will be experiments, surveys, interviews, and observations
->>>>>>> 75a1f3d125a3bf70e5e033491322a5afede19cc4
+125a3bf70e5e033491322a5afede19cc4

@@ -9,12 +9,14 @@ output: "html_document"
 ```{r load-pkg, message = FALSE}
 library(tidyverse)
 library(skimr)
-library(readr)
 ```
 
 
+```{r load-data, message = FALSE}
+trips <- read_csv("metro-trips-2020-q4.csv")
+```
 
 ```{r}
-trips <- read_csv("metro-trips-2020-q4.csv")
+skim(trips)
 ```
 
