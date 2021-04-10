@@ -16,7 +16,78 @@ library(skimr)
 trips <- read_csv("metro-trips-2020-q4.csv")
 ```
 
-```{r}
-skim(trips)
+```{r load-data, message = FALSE}
+NYtripdata19 <- read_csv("JC-201909-citibike-tripdata.csv")
+```
+```{r load-data, message = FALSE}
+NYtripdata20 <- read_csv("JC-202009-citibike-tripdata.csv")
 ```
 
+```{r}
+glimpse(NYtripdata19)
+```
+```{r}
+NYtripdata19 %>%
+  count(gender)
+```
+```{r}
+NYtripdata19 %>%
+  count (usertype)
+```
+
+```{r calculate-statistics-for-tripduration-by-gender}
+NYtripdata19 %>%
+  group_by(gender) %>%
+ summarise(minimum_trdur=min(tripduration),mean_trdur=mean(tripduration),median_trdur=median(tripduration), 
+            maximum_trdur=max(tripduration))
+```
+
+```{r}
+glimpse (NYtripdata20)
+```
+
+
+```{r}
+NYtripdata20 %>%
+  count (gender)
+```
+```{r}
+NYtripdata20 %>%
+  count (usertype)
+```
+
+
+```{r calculate-statistics-for-tripduration-by-gender}
+NYtripdata20 %>%
+  group_by(gender) %>%
+ summarise(minimum_trdur=min(tripduration),mean_trdur=mean(tripduration),median_trdur=median(tripduration), 
+            maximum_trdur=max(tripduration))
+```
+
+```{r}
+NYtripdata20 %>%
+  summarise(mean_trdur=mean(tripduration))
+```
+
+```{r}
+glimpse(trips)
+```
+```{r}
+trips %>%
+  count(bike_id)
+```
+```{r}
+trips %>%
+  count(bike_type)
+```
+```{r}
+trips %>%
+  count(trip_route_category)
+```
+
+
+
+
+
+
+```
