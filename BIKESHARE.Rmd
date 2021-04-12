@@ -14,15 +14,15 @@ library(lubridate)
 
 
 ```{r load-data, message = FALSE}
-trips <- read_csv("metro-trips-2020-q4.csv"")
+trips <- read_csv(metro-trips-2020-q4.csv)
 
 ```
 
 ```{r load-data, message = FALSE}
-NYtripdata19 <- read_csv("JC-201909-citibike-tripdata.csv")
+NYtripdata19 <- read_csv(JC-201909-citibike-tripdata.csv)
 ```
 ```{r load-data, message = FALSE}
-NYtripdata20 <- read_csv("JC-202009-citibike-tripdata.csv")
+NYtripdata20 <- read_csv(JC-202009-citibike-tripdata.csv)
 ```
 
 ```{r}
@@ -44,24 +44,25 @@ NY19 %>%
             stdev_age=sd(age))
 ```
 ```{r}
-#NY19 <- tibble(age = 1:100)
+NY19 <- tibble(age = 1:100)
 
-#NY19 %>% 
-  #mutate(age_categories = case_when(age <= 35 ~ "less than 35 years old",
-                                   # age <= 50 & age > 35 ~ "36~50 years old",
-                                   # age <= 65 & age > 50 ~ "51~65 years old",
-                                   # TRUE ~ "Other"))
+NY19 %>% 
+  mutate(age_categories = case_when(age <= 35 ~ less than 35 years old)
+                                    (age <= 50 & age > 35 ~ 36~50 years old)
+                                   ( age <= 65 & age > 50 ~ 51~65 years old)
+                                    TRUE ~ Other))
+
 ```
  
 ```{r}
 glimpse(NY19)
 ```
-```{r calculate-statistics-for-tripduration-by-gender-September-2019}
+```
+{r calculate-statistics-for-tripduration-by-gender-September-2019}
 NY19 %>%
-  group_by(gender) %>%
- summarise(minimum_trdur=min(tripduration),mean_trdur=mean(tripduration),median_trdur=median(tripduration), 
+  group_by(gender)) %>%
+ summarize(minimum_trdur=min(tripduration),mean_trdur=mean(tripduration),median_trdur=median(tripduration), 
             maximum_trdur=max(tripduration))
-
 ```
 
 
