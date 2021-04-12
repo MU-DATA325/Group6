@@ -14,7 +14,8 @@ library(lubridate)
 
 
 ```{r load-data, message = FALSE}
-trips <- read_csv("metro-trips-2020-q4.csv")
+trips <- read_csv("metro-trips-2020-q4.csv"")
+
 ```
 
 ```{r load-data, message = FALSE}
