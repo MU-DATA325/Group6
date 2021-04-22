@@ -201,8 +201,8 @@ trips %>%
 ```
 ```
 library(readxl)
-philly_trips_2020_q4 <- read_excel("philly-trips-2020-q4.xlsx")
-View(philly_trips_2020_q4)
+philly_trips_2020_q4 <- read_excel("philly trips.xlsx")
+View(philly_trips_.xlsx)
 ```
 ```
 title: "World of BikeShare"
