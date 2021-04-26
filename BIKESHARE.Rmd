@@ -13,14 +13,15 @@ library(lubridate)
 ```
 
 
-```{r load-data, message = FALSE}
+```{r load-data la, message = FALSE}
 trips <- read_csv(metro-trips-2020-q4.csv)
 
 ```
 
-```{r load-data, message = FALSE}
+```{r load-data nyc, message = FALSE}
 NYtripdata19 <- read_csv(JC-201909-citibike-tripdata.csv)
 ```
+
 ```{r load-data, message = FALSE}
 NYtripdata20 <- read_csv(JC-202009-citibike-tripdata.csv)
 ```
@@ -28,61 +29,54 @@ NYtripdata20 <- read_csv(JC-202009-citibike-tripdata.csv)
 ```{r}
 glimpse(NYtripdata19)
 ```
+
 ```{r creating-variable-age-for-September-2019-assigning-it-to-NY19}
 NY19 <- NYtripdata19 %>% 
   mutate (age = (2019-`birth year`))
 ```
+
 ```{r - glimpse-the-new-dataframe-NY19}
 glimpse(NY19)
 ```
 
 
 
-```{r calculate-statistics-for-age_category-September-2019}
+```{r calculate-statistics-for-age_category-September-2019 NY19}
 NY19 %>%  
  summarise(minimum_age=min(age),mean_age=mean(age),median_age=median(age), 
             stdev_age=sd(age))
 ```
-```{r}
-NY19 <- tibble(age = 1:100)
 
-NY19 %>% 
-  mutate(age_categories = case_when(age <= 35 ~ less than 35 years old)
-                                    (age <= 50 & age > 35 ~ 36~50 years old)
-                                   ( age <= 65 & age > 50 ~ 51~65 years old)
-                                    TRUE ~ Other))
-
-```
- 
 ```{r}
 glimpse(NY19)
 ```
-```
-{r calculate-statistics-for-tripduration-by-gender-September-2019}
+
+
+```{r calculate-statistics-for-tripduration-by-gender-September-2019 NY19}
 NY19 %>%
-  group_by(gender)) %>%
+  group_by(gender) %>%
  summarize(minimum_trdur=min(tripduration),mean_trdur=mean(tripduration),median_trdur=median(tripduration), 
             maximum_trdur=max(tripduration))
 ```
 
 
 
-```{r number-of-users-by-gender-September-2019}
+```{r number-of-users-by-gender-September-2019 NY19}
 NY19 %>%
   count(gender)
 ```
 
-```{r bar-graph-by-gender-September-2019}
+```{r bar-graph-by-gender-September-2019 NY19}
 ggplot(NY19, aes(gender)) +
   geom_bar()
 ```
 
-```{r number-of-users-by-usertype-September-2019}
+```{r number-of-users-by-usertype-September-2019 NY19}
 NY19 %>%
   count (usertype)
 ```
 
-```{r calculate-statistics-for-tripduration-by-gender-September-2019}
+```{r calculate-statistics-for-tripduration-by-gender-September-2019 NY19}
 NY19 %>%
   group_by(gender) %>%
  summarise(minimum_trdur=min(tripduration),mean_trdur=mean(tripduration),median_trdur=median(tripduration), 
@@ -91,46 +85,46 @@ NY19 %>%
 ```
 
 
-```{r line-graph-tripduration-usertype-September-2019}
+```{r line-graph-tripduration-usertype-September-2019 NY19}
 ggplot(data = NY19) + 
   geom_line(mapping = aes(x = tripduration, y = usertype))  
   
 ```
 
-```{r count-top-ten-most-used-bikes-for-September-2019}
+```{r count-top-ten-most-used-bikes-for-September-2019 NY19}
 NY19 %>%
   count(bikeid)%>%
   arrange(desc(n))%>%
             slice_head(n=10)
 ```
 
-```{r count-last-ten-less-used-bikes-for-September-2019}
+```{r count-last-ten-less-used-bikes-for-September-2019 NY19}
 NY19 %>%
   count(bikeid)%>%
   arrange(desc(n))%>%
             slice_tail(n=10)
 ```
 
-```{r glimpse-of-dataset-September-2020}
+```{r glimpse-of-dataset-September-2020 NY20}
 glimpse (NYtripdata20)
 ```
 
 
-```{r creating-age-variable-September-2020}
+```{r creating-age-variable-September-2020 NY20}
  NY20 <-NYtripdata20 %>% 
   mutate (age = (2020-`birth year`))
 ```
 
-```{r glipse-at-NY20-September-2020}
+```{r glipse-at-NY20-September-2020 NY20}
 glimpse(NY20)
 ```
 
-```{r number-of-users-by-gender-September-2020}
+```{r number-of-users-by-gender-September-2020 NY20}
 NY20 %>%
   count (gender)
 ```
 
-```{r bar-graph-by-gender-September-2020}
+```{r bar-graph-by-gender-September-2020 NY20}
 ggplot(NY20, aes(gender)) +
   geom_bar()
 ```
@@ -142,84 +136,63 @@ ggplot(NY20, aes(gender)) +
 
 
 
-```{r number-of-users-by-usertype-September-2020}
+```{r number-of-users-by-usertype-September-2020 NY20}
 NY20 %>%
   count (usertype)
 ```
 
-```{r calculate-statistics-for-tripduration-by-gender-September-2020}
+```{r calculate-statistics-for-trip duration-by-gender-September-2020 NY20}
 NY20 %>%
   group_by(gender) %>%
  summarise(minimum_trdur=min(tripduration),mean_trdur=mean(tripduration),median_trdur=median(tripduration), 
             maximum_trdur=max(tripduration))
 ```
-```{r line-graph-tripduration-usertype-September-2020}
+
+```{r line-graph-tripduration-usertype-September-2020 NY20}
 ggplot(data = NY20) + 
   geom_line(mapping = aes(x = tripduration, y = usertype))  
   
 ```
 
 
-```{r count-top-ten-most-used-bikes-for-September-2020}
+```{r count-top-ten-most-used-bikes-for-September-2020 NY20}
 NY20 %>%
   count(bikeid)%>%
   arrange(desc(n))%>%
           slice_head(n=10)
 ```
 
-```{r count-last-ten-less-used-bikes-for-September-2020 }
+```{r count-last-ten-less-used-bikes-for-September-2020 NY20}
 NY20 %>%
   count(bikeid)%>%
   arrange(desc(n))%>%
           slice_tail(n=10)
 ```
 
-```{r glimpse-at-trips-dataframe-Washington-DC-last-quarter-2020}
+```{r glimpse-at-trips-dataframe-Washington-DC-last-quarter-2020 NY20}
 glimpse(trips)
 ```
 
-```{r count-top-ten-usage-of-each-bike-in-Washington-DC-for last quarter-2020}
+```{r count-top-ten-usage-of-each-bike-in-Washington-DC-for last quarter-2020 NY20}
 trips %>%
   count(bike_id)%>%
   arrange(desc(n))%>%
           slice_head(n=10)
 ```
 
-```{r least-used-bikes in Washington-DC-last-quarter-2020}
+```{r least-used-bikes in Washington-DC-last-quarter-2020 NY20}
 trips %>%
   count(bike_id)%>%
   arrange(desc(n))%>%
           slice_tail(n=10)
 ```
-```{r count-number-of-bike-by-type-Washington-DC-last-quarter-2020}
+
+```{r count-number-of-bike-by-type-Washington-DC-last-quarter-2020 NY20}
 trips %>%
   count(bike_type)
 ```
-```{r count-trip-route-categories-Washington-DC-last-quarter-2020}
+
+```{r count-trip-route-categories-Washington-DC-last-quarter-2020 NY20}
 trips %>%
   count(trip_route_category)
-```
-```
-library(readxl)
-philly_trips_2020_q4 <- read_excel("philly trips.xlsx")
-View(philly_trips_.xlsx)
-```
-```
-title: "World of BikeShare"
-author: "Group 6"
-institute: "RStudio, PBC"
-date: "r Sys.Date()"
-output:
-  xaringan::moon_reader:
-    lib_dir: libs
-    nature:
-    highlightStyle: github
-    highlightLines: true
-    countIncrementalSlides: false
-    ```
----
-
-
-
-
 ```
