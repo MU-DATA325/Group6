@@ -12,16 +12,16 @@ library(skimr)
 library(lubridate)
 ```
 
+```{r load-data la, message = FALSE}
+trips <- read_csv(metro-trips-2020-q4.csv)
+```
 
-```{r load-data, message = FALSE}
-trips <- read_csv("metro-trips-2020-q4.csv")
+```{r load-data nyc, message = FALSE}
+NYtripdata19 <- read_csv(JC-201909-citibike-tripdata.csv)
 ```
 
 ```{r load-data, message = FALSE}
-NYtripdata19 <- read_csv("JC-201909-citibike-tripdata.csv")
-```
-```{r load-data, message = FALSE}
-NYtripdata20 <- read_csv("JC-202009-citibike-tripdata.csv")
+NYtripdata20 <- read_csv(JC-202009-citibike-tripdata.csv)
 ```
 
 ```{r}
@@ -33,11 +33,13 @@ NYtripdata20 <- read_csv("JC-202009-citibike-tripdata.csv")
 ```{r}
 glimpse(NYtripdata19)
 ```
+
 ```{r creating-variable-age-for-September-2019-assigning-it-to-NY19}
 NY19 <- NYtripdata19 %>% 
   mutate (age = (2019-`birth year`))
 ```
 
+<<<<<<< HEAD
 ```{r creating-variable-agegroup-for-September-2019-assigning-it-to-NY19}
 NY19 <- NY19 %>% mutate(agegroup = case_when(age >= 61 & age <= 131 ~ '4',
                                              age >= 46  & age <= 60 ~ '3',
@@ -50,6 +52,7 @@ NY19$gender     <- as.factor(NY19$gender)
 levels(NY19$gender) <- c("UNKNOWN", "MALE", "FEMALE")
 ```
 
+
 ```{r - glimpse-the-new-dataframe-NY19}
 head(NY19)
 ```
@@ -61,7 +64,7 @@ head(NY19)
 
 
 
-```{r calculate-statistics-for-age_category-September-2019}
+```{r calculate-statistics-for-age_category-September-2019 NY19}
 NY19 %>%  
  summarise(minimum_age=min(age),mean_age=mean(age),median_age=median(age), 
             stdev_age=sd(age))
@@ -91,18 +94,22 @@ ggplot(NY19) + geom_histogram(aes(tripduration.min, binwidth=2), fill="darkgreen
 glimpse(NY19)
 ```
 
-
 ```{r calculate-statistics-for-tripduration-in-minutes-by-gender-September-2019}
 NY19 %>%
   group_by(gender) %>%
  summarise(minimum_trdur=min(tripduration.min),mean_trdur=mean(tripduration.min),median_trdur=median(tripduration.min), 
             maximum_trdur=max(tripduration.min))
-
+```
+```{r calculate-statistics-for-tripduration-by-gender-September-2019 NY19}
+NY19 %>%
+  group_by(gender) %>%
+ summarize(minimum_trdur=min(tripduration),mean_trdur=mean(tripduration),median_trdur=median(tripduration), 
+            maximum_trdur=max(tripduration))
 ```
 
 
 
-```{r number-of-users-by-gender-September-2019}
+```{r number-of-users-by-gender-September-2019 NY19}
 NY19 %>%
   count(gender)
 ```
@@ -115,7 +122,7 @@ NY19 %>% filter(gender != "UNKNOWN") %>% ggplot(.)  + geom_density(aes(`birth ye
 ```
 
 
-```{r number-of-users-by-usertype-September-2019}
+```{r number-of-users-by-usertype-September-2019 NY19}
 NY19 %>%
   count (usertype)
 ```
@@ -126,8 +133,7 @@ ggplot(NY19) + geom_bar(aes(usertype), fill="white", colour="darkblue", width=0.
 ggplot(NY19) + geom_bar(aes(usertype, y = (..count..)/sum(..count..)), fill="white", colour="red", width=0.2) + ylab("Proportion")
 ```
 
-
-```{r calculate-statistics-for-tripduration-in-minutes-by-agegroup-September-2019}
+```{r calculate-statistics-for-tripduration-by-agegroup-September-2019 NY19}
 NY19 %>%
   group_by(agegroup) %>%
  summarise(minimum_trdur=min(tripduration.min),mean_trdur=mean(tripduration.min),median_trdur=median(tripduration.min), 
@@ -145,21 +151,9 @@ ggplot(NY19, aes(x=age,y=tripduration.min ,colour=gender)) +
 ```
 
 
-```{r}
-head(NY19)
-```
 
 
-
-
-
-
-
-
-
-
-
-```{r column-graph-agegroup-tripduration-usertype-September-2019}
+```{r column-graph-tripduration-usertype-September-2019 NY19}
 ggplot(data = NY19) + 
   geom_col(mapping = aes(x = agegroup, y = tripduration.min, colour=usertype))  
   
@@ -178,7 +172,7 @@ ggplot(NY19) + geom_bar(aes(x=hour(NY19$starttime), y=(..count..)/sum(..count..)
 ```
 
 
-```{r count-top-ten-most-used-bikes-for-September-2019}
+```{r count-top-ten-most-used-bikes-for-September-2019 NY19}
 NY19 %>%
   count(bikeid)%>%
   arrange(desc(n))%>%
@@ -192,7 +186,7 @@ ggplot(as.data.frame(pop_bikes),aes(Var1, Freq)) + coord_flip() + geom_col(aes(f
   geom_text(aes(label= Freq), size = 3, position = position_stack(vjust = 0.5))
 ```
 
-```{r count-last-ten-less-used-bikes-for-September-2019}
+```{r count-last-ten-less-used-bikes-for-September-2019 NY19}
 NY19 %>%
   count(bikeid)%>%
   arrange(desc(n))%>%
@@ -220,17 +214,8 @@ NY20 <- NY20 %>% mutate(agegroup = case_when(age >= 61 & age <= 131 ~ '4',
 NY20$gender     <- as.factor(NY20$gender)
 levels(NY20$gender) <- c("UNKNOWN", "MALE", "FEMALE")
 ```
-```{r creating- new-variable-tripduration-in-minutes-September-2020}
-NY20  <- mutate(NY20, tripduration.min = tripduration/60)
-x.max <- quantile(NY20$tripduration.min, 0.99)
-```
-```{r defining-tripduration.min-as-integer-September-2020}
-NY20$tripduration.min <- as.integer(NY20$tripduration.min)
-```
 
-
-
-```{r glipse-at-NY20-September-2020}
+```{r glimpse-at-NY20-September-2020}
 glimpse(NY20)
 ```
 ```{r plotting-the-histogram-of-the-birth-year-for-September-2020}
@@ -244,6 +229,17 @@ NY20 %>%
 ```
 
 
+```{r glipse-at-NY20-September-2020 NY20}
+glimpse(NY20)
+```
+
+```{r number-of-users-by-gender-September-2020 NY20}
+NY20 %>%
+  count (gender)
+```
+
+
+
 ```{r histogram-for-tripduration-in seconds-September-2020}
 NY20$tripduration <- as.integer(NY20$tripduration)
 ggplot(NY20) + geom_histogram(aes(tripduration))
@@ -252,6 +248,14 @@ ggplot(NY20) + geom_histogram(aes(tripduration))
 x.max <- quantile(NY20$tripduration, 0.99)
 ggplot(NY20) + geom_histogram(aes(tripduration)) + xlim(c(0, x.max))
 ```
+```{r creating- new-variable-tripduration-in-minutes-September-2020}
+NY19  <- mutate(NY20, tripduration.min = tripduration/60)
+x.max <- quantile(NY20$tripduration.min, 0.99)
+```
+```{r defining-tripduration.min-as-integer-September-2020}
+NY20$tripduration.min <- as.integer(NY19$tripduration.min)
+```
+
 ```{r histogram-of-the-tripduration-in minutes-September-2020}
 ggplot(NY20) + geom_histogram(aes(tripduration.min, binwidth=2), fill="darkgreen", alpha=0.4) + xlim(c(0, x.max)) + theme_classic()
 ```
@@ -276,11 +280,12 @@ ggplot(NY20) + geom_bar(aes(gender, y = (..count..)/sum(..count..)), fill="orang
 NY20 %>% filter(gender != "UNKNOWN") %>% ggplot(.)  + geom_density(aes(`birth year`,group=gender, fill=gender, colour=gender), adjust=3, alpha=0.1)
 ```
 
-```{r number-of-users-by-usertype-September-2020}
+```{r number-of-users-by-usertype-September-2020 NY20}
 NY20 %>%
   count (usertype)
 ```
 
+<<<<<<< HEAD
 ```{r bar-graph-count-of-usertypes-September-2020}
 ggplot(NY20) + geom_bar(aes(usertype), fill="white", colour="darkblue", width=0.2)
 ```
@@ -298,6 +303,7 @@ NY20 %>%
 ```{r graph-age-gender-September-2020}
 ggplot(NY20, aes(x=age,group=gender,colour=gender)) + geom_freqpoly(stat = "bin",size=1) 
 ```
+
 ```{r visual-relationship-mean-trip-duration-and-age-per-gender-September-2020}
 ggplot(NY20, aes(x=age,y=tripduration.min ,colour=gender)) + 
   stat_summary(fun.y="mean", geom="line", size=1) + facet_grid(gender ~ .) + 
@@ -325,7 +331,7 @@ ggplot(NY20, aes(x=hour(NY20$starttime),fill=as.factor(hour(NY20$starttime))))+
 ggplot(NY20) + geom_bar(aes(x=hour(NY20$starttime), y=(..count..)/sum(..count..), fill=usertype)) + theme_bw() + ylab("") + scale_fill_manual(values=c("sienna1", "sienna"))
 ```
 
-```{r count-top-ten-most-used-bikes-for-September-2020}
+```{r count-top-ten-most-used-bikes-for-September-2020 NY20}
 NY20 %>%
   count(bikeid)%>%
   arrange(desc(n))%>%
@@ -356,31 +362,26 @@ NY20 %>%
 glimpse(trips)
 ```
 
-```{r count-top-ten-usage-of-each-bike-in-Washington-DC-for last quarter-2020}
+```{r count-top-ten-usage-of-each-bike-in-Washington-DC-for last quarter-2020 NY20}
 trips %>%
   count(bike_id)%>%
   arrange(desc(n))%>%
           slice_head(n=10)
 ```
 
-```{r least-used-bikes in Washington-DC-last-quarter-2020}
+```{r least-used-bikes in Washington-DC-last-quarter-2020 NY20}
 trips %>%
   count(bike_id)%>%
   arrange(desc(n))%>%
           slice_tail(n=10)
 ```
-```{r count-number-of-bike-by-type-Washington-DC-last-quarter-2020}
+
+```{r count-number-of-bike-by-type-Washington-DC-last-quarter-2020 NY20}
 trips %>%
   count(bike_type)
 ```
-```{r count-trip-route-categories-Washington-DC-last-quarter-2020}
+
+```{r count-trip-route-categories-Washington-DC-last-quarter-2020 NY20}
 trips %>%
   count(trip_route_category)
-```
-
-
-
-
-
-
 ```

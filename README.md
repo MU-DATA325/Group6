@@ -13,7 +13,7 @@ Capital Bike share
 
 Washington
 Boston
-Los Angeles = Metro-Trips-2020-Q4
+Los Angeles 
 New York
 Chicago
 Philadelphia
