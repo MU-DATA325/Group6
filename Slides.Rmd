@@ -1,0 +1,135 @@
+---
+title: "Bikeshare in LA, NYC and Phili"
+subtitle: "Bikesharing"
+author: "Rachel, Ryan, Ina and Gorish"
+institute: "Marymount"
+date: "`r Sys.Date()`"
+output:
+ xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+# Introduction
+The first thing we have to do is setup our environment and load our data from bikesharing in LA, NYC and Philadelphia
+
+```{r load-pkg, message = FALSE}
+library(tidyverse)
+library(skimr)
+library(lubridate)
+library(readr)
+library(readxl)
+```
+
+```{r load-data la, message=FALSE, warning=FALSE}
+trips <- read_csv("metro-trips-2020-q4.csv")
+```
+
+```{r load-data nyc, message = FALSE}
+NYtripdata19 <- read_csv("JC-201909-citibike-tripdata.csv")
+```
+
+```{r load-data, message = FALSE}
+NYtripdata20 <- read_csv("JC-202009-citibike-tripdata.csv")
+```
+
+```{r Load-data phili, message=FALSE, warning=FALSE}
+philly_trips <- read_excel("philly trips.xlsx")
+```
+
+---
+```{r message=FALSE, warning=FALSE}
+parse_date_time("04-16-2021,1:09:20", orders = "mdy hms" )
+```
+
+---
+# Let's Look at the LA and Phili Data
+```{r}
+names(trips)
+```
+---
+# Let's Look at the Data (2)
+```{r}
+glimpse(trips)
+```
+---
+# Let's Look at the  NYC Data
+Data for NYC was from CitiBike and has different fields
+```{r}
+names(NYtripdata19)
+```
+---
+# Let's Look at the Data (2)
+```{r}
+glimpse(NYtripdata19)
+```
+---
+
+# Statistics and visualisation for September 2019 based on NY19 dataframe
+
+```{r creating-variable-age-for-September-2019-assigning-it-to-NY19}
+NY19 <- NYtripdata19 %>% 
+  mutate (age = (2019-`birth year`))
+```
+
+
+```{r creating-variable-agegroup-for-September-2019-assigning-it-to-NY19}
+NY19 <- NY19 %>% mutate(agegroup = case_when(age >= 61 & age <= 131 ~ '4',
+                                             age >= 46  & age <= 60 ~ '3',
+                                             age >= 30  & age <= 45 ~ '2',
+                                             age >= 16  & age <= 29 ~ '1'))
+
+```
+
+```{r assigning-the-gender-variable-names-September-2019}
+NY19$gender     <- as.factor(NY19$gender)
+levels(NY19$gender) <- c("UNKNOWN", "MALE", "FEMALE")
+```
+---
+```{r plotting-the-histogram-of-the-birth-year-for-September-2019}
+ggplot(NY19) + geom_histogram(aes(`birth year`))
+```
+
+---
+# Slide Title
+
+```{r calculate-statistics-for-age_category-September-2019 NY19}
+NY19 %>%  
+ summarise(minimum_age=min(age),mean_age=mean(age),median_age=median(age), 
+            stdev_age=sd(age))
+```
+---
+
+```{r histogram-for-tripduration-in seconds-September-2019}
+NY19$tripduration <- as.integer(NY19$tripduration)
+ggplot(NY19) + geom_histogram(aes(tripduration))
+```
+
+---
+# Slide Title
+
+```{r histogram-adjusted-x-axis-for-tripduration-in seconds-September-2019 }
+x.max <- quantile(NY19$tripduration, 0.99)
+ggplot(NY19) + geom_histogram(aes(tripduration)) + xlim(c(0, x.max))
+```
+
+```{r creating- new-variable-tripduration-in-minutes-September-2019}
+NY19  <- mutate(NY19, tripduration.min = tripduration/60)
+x.max <- quantile(NY19$tripduration.min, 0.99)
+```
+---
+```{r defining-tripduration.min-as-integer-September-2019}
+NY19$tripduration.min <- as.integer(NY19$tripduration.min)
+```
+
+```{r histogram-of-the-tripduration-in minutes-September-2019, message=FALSE, warning=FALSE}
+ggplot(NY19) + geom_histogram(aes(tripduration.min, binwidth=2), fill="darkgreen", alpha=0.4) + xlim(c(0, x.max)) + theme_classic()
+```
+
+
+
+
+

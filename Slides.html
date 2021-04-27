@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Bikeshare in LA, NYC and Phili</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Rachel, Ryan, Ina and Gorish" />
+    <meta name="date" content="2021-04-27" />
+    <script src="libs/header-attrs-2.7/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Bikeshare in LA, NYC and Phili
+## Bikesharing
+### Rachel, Ryan, Ina and Gorish
+### Marymount
+### 2021-04-27
+
+---
+
+
+# Introduction
+The first thing we have to do is setup our environment and load our data from bikesharing in LA, NYC and Philadelphia
+
+
+```r
+library(tidyverse)
+library(skimr)
+library(lubridate)
+library(readr)
+library(readxl)
+```
+
+
+```r
+trips &lt;- read_csv("metro-trips-2020-q4.csv")
+```
+
+
+```r
+NYtripdata19 &lt;- read_csv("JC-201909-citibike-tripdata.csv")
+```
+
+
+```r
+NYtripdata20 &lt;- read_csv("JC-202009-citibike-tripdata.csv")
+```
+
+
+```r
+philly_trips &lt;- read_excel("philly trips.xlsx")
+```
+
+---
+
+```r
+parse_date_time("04-16-2021,1:09:20", orders = "mdy hms" )
+```
+
+```
+## [1] "2021-04-16 01:09:20 UTC"
+```
+
+---
+# Let's Look at the LA and Phili Data
+
+```r
+names(trips)
+```
+
+```
+##  [1] "trip_id"             "duration"            "start_time"         
+##  [4] "end_time"            "start_station"       "start_lat"          
+##  [7] "start_lon"           "end_station"         "end_lat"            
+## [10] "end_lon"             "bike_id"             "plan_duration"      
+## [13] "trip_route_category" "passholder_type"     "bike_type"
+```
+---
+# Let's Look at the Data (2)
+
+```r
+glimpse(trips)
+```
+
+```
+## Rows: 37,877
+## Columns: 15
+## $ trip_id             &lt;dbl&gt; 148179433, 148179933, 148182639, 148182739, 148180…
+## $ duration            &lt;dbl&gt; 14, 18, 141, 141, 15, 40, 24, 9, 23, 22, 249, 17, …
+## $ start_time          &lt;chr&gt; "10/1/2020 0:06", "10/1/2020 0:25", "10/1/2020 0:2…
+## $ end_time            &lt;chr&gt; "10/1/2020 0:20", "10/1/2020 0:43", "10/1/2020 2:5…
+## $ start_station       &lt;dbl&gt; 3042, 4404, 4482, 4482, 3074, 4302, 3078, 3005, 43…
+## $ start_lat           &lt;dbl&gt; 34.04930, 34.04813, 34.09437, 34.09437, 34.04417, …
+## $ start_lon           &lt;dbl&gt; -118.2388, -118.2710, -118.3310, -118.3310, -118.2…
+## $ end_station         &lt;dbl&gt; 3074, 4444, 4482, 4482, 3042, 4302, 4478, 4491, 43…
+## $ end_lat             &lt;dbl&gt; 34.04417, 34.06162, 34.09437, 34.09437, 34.04930, …
+## $ end_lon             &lt;dbl&gt; -118.2612, -118.3056, -118.3310, -118.3310, -118.2…
+## $ bike_id             &lt;dbl&gt; 6378, 12440, 19803, 18915, 20062, 17163, 16777, 19…
+## $ plan_duration       &lt;dbl&gt; 30, 30, 1, 1, 30, 30, 1, 30, 30, 1, 1, 30, 30, 30,…
+## $ trip_route_category &lt;chr&gt; "One Way", "One Way", "Round Trip", "Round Trip", …
+## $ passholder_type     &lt;chr&gt; "Monthly Pass", "Monthly Pass", "Walk-up", "Walk-u…
+## $ bike_type           &lt;chr&gt; "standard", "standard", "electric", "electric", "s…
+```
+---
+# Let's Look at the  NYC Data
+Data for NYC was from CitiBike and has different fields
+
+```r
+names(NYtripdata19)
+```
+
+```
+##  [1] "tripduration"            "starttime"              
+##  [3] "stoptime"                "start station id"       
+##  [5] "start station name"      "start station latitude" 
+##  [7] "start station longitude" "end station id"         
+##  [9] "end station name"        "end station latitude"   
+## [11] "end station longitude"   "bikeid"                 
+## [13] "usertype"                "birth year"             
+## [15] "gender"
+```
+---
+# Let's Look at the Data (2)
+
+```r
+glimpse(NYtripdata19)
+```
+
+```
+## Rows: 49,244
+## Columns: 15
+## $ tripduration              &lt;dbl&gt; 145, 212, 569, 1380, 1346, 748, 137, 631, 17…
+## $ starttime                 &lt;time&gt; 00:37:00, 03:00:00, 07:13:00, 07:25:00, 07:…
+## $ stoptime                  &lt;time&gt; 03:03:00, 06:33:00, 16:42:00, 30:26:00, 30:…
+## $ `start station id`        &lt;dbl&gt; 3640, 3194, 3214, 3214, 3214, 3185, 3214, 31…
+## $ `start station name`      &lt;chr&gt; "Journal Square", "McGinley Square", "Essex …
+## $ `start station latitude`  &lt;dbl&gt; 40.73367, 40.72534, 40.71277, 40.71277, 40.7…
+## $ `start station longitude` &lt;dbl&gt; -74.06250, -74.06762, -74.03649, -74.03649, …
+## $ `end station id`          &lt;dbl&gt; 3206, 3679, 3184, 3792, 3792, 3280, 3214, 31…
+## $ `end station name`        &lt;chr&gt; "Hilltop", "Bergen Ave", "Paulus Hook", "Col…
+## $ `end station latitude`    &lt;dbl&gt; 40.73117, 40.72210, 40.71415, 40.71687, 40.7…
+## $ `end station longitude`   &lt;dbl&gt; -74.05757, -74.07146, -74.03355, -74.03281, …
+## $ bikeid                    &lt;dbl&gt; 29303, 29297, 29435, 29509, 29226, 26188, 29…
+## $ usertype                  &lt;chr&gt; "Subscriber", "Subscriber", "Customer", "Sub…
+## $ `birth year`              &lt;dbl&gt; 1991, 1993, 1977, 1965, 1968, 1981, 1969, 19…
+## $ gender                    &lt;dbl&gt; 1, 2, 1, 1, 2, 1, 2, 0, 1, 1, 1, 0, 2, 1, 1,…
+```
+---
+
+# Statistics and visualisation for September 2019 based on NY19 dataframe
+
+
+```r
+NY19 &lt;- NYtripdata19 %&gt;% 
+  mutate (age = (2019-`birth year`))
+```
+
+
+
+```r
+NY19 &lt;- NY19 %&gt;% mutate(agegroup = case_when(age &gt;= 61 &amp; age &lt;= 131 ~ '4',
+                                             age &gt;= 46  &amp; age &lt;= 60 ~ '3',
+                                             age &gt;= 30  &amp; age &lt;= 45 ~ '2',
+                                             age &gt;= 16  &amp; age &lt;= 29 ~ '1'))
+```
+
+
+```r
+NY19$gender     &lt;- as.factor(NY19$gender)
+levels(NY19$gender) &lt;- c("UNKNOWN", "MALE", "FEMALE")
+```
+---
+
+```r
+ggplot(NY19) + geom_histogram(aes(`birth year`))
+```
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+![](Slides_files/figure-html/plotting-the-histogram-of-the-birth-year-for-September-2019-1.png)&lt;!-- --&gt;
+
+---
+# Slide Title
+
+
+```r
+NY19 %&gt;%  
+ summarise(minimum_age=min(age),mean_age=mean(age),median_age=median(age), 
+            stdev_age=sd(age))
+```
+
+```
+## # A tibble: 1 x 4
+##   minimum_age mean_age median_age stdev_age
+##         &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+## 1          16     37.4         35      10.3
+```
+---
+
+
+```r
+NY19$tripduration &lt;- as.integer(NY19$tripduration)
+ggplot(NY19) + geom_histogram(aes(tripduration))
+```
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+![](Slides_files/figure-html/histogram-for-tripduration-in seconds-September-2019-1.png)&lt;!-- --&gt;
+
+---
+# Slide Title
+
+
+```r
+x.max &lt;- quantile(NY19$tripduration, 0.99)
+ggplot(NY19) + geom_histogram(aes(tripduration)) + xlim(c(0, x.max))
+```
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+```
+## Warning: Removed 493 rows containing non-finite values (stat_bin).
+```
+
+```
+## Warning: Removed 2 rows containing missing values (geom_bar).
+```
+
+![](Slides_files/figure-html/histogram-adjusted-x-axis-for-tripduration-in seconds-September-2019-1.png)&lt;!-- --&gt;
+
+
+```r
+NY19  &lt;- mutate(NY19, tripduration.min = tripduration/60)
+x.max &lt;- quantile(NY19$tripduration.min, 0.99)
+```
+---
+
+```r
+NY19$tripduration.min &lt;- as.integer(NY19$tripduration.min)
+```
+
+
+```r
+ggplot(NY19) + geom_histogram(aes(tripduration.min, binwidth=2), fill="darkgreen", alpha=0.4) + xlim(c(0, x.max)) + theme_classic()
+```
+
+![](Slides_files/figure-html/histogram-of-the-tripduration-in minutes-September-2019-1.png)&lt;!-- --&gt;
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
