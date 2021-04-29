@@ -93,7 +93,7 @@ ggplot(NY19) + geom_histogram(aes(`birth year`))
 ```
 
 ---
-# Slide Title
+# NYC Citibike Age
 
 ```{r calculate-statistics-for-age_category-September-2019 NY19}
 NY19 %>%  
@@ -108,7 +108,7 @@ ggplot(NY19) + geom_histogram(aes(tripduration))
 ```
 
 ---
-# Slide Title
+# NYC Trip Duration
 
 ```{r histogram-adjusted-x-axis-for-tripduration-in seconds-September-2019, message=FALSE, warning=FALSE}
 x.max <- quantile(NY19$tripduration, 0.99)
