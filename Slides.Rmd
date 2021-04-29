@@ -1,5 +1,5 @@
 ---
-title: "Bikeshare in LA, NYC and Philly"
+title: "Bikeshare in LA, NYC, Philly and Boston"
 subtitle: "Bikesharing"
 author: "Rachel, Ryan, Ina and Gorish"
 institute: "Marymount"
@@ -164,4 +164,7 @@ ggplot(boston_data, aes(x = bikeid, y = tripduration)) +
 ```
 
 ----
+
+
+
 

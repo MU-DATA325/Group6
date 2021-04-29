@@ -385,3 +385,6 @@ trips %>%
 trips %>%
   count(trip_route_category)
 ```
+
+
+
