@@ -1,5 +1,5 @@
 ---
-title: "Bikeshare in LA, NYC and Phili"
+title: "Bikeshare in LA, NYC and Philly"
 subtitle: "Bikesharing"
 author: "Rachel, Ryan, Ina and Gorish"
 institute: "Marymount"
@@ -133,7 +133,7 @@ LA Trip Duration
 ggplot(trips) + geom_histogram(aes(duration, binwidth=4), fill="red", alpha=0.4) + xlim(c(0, x.max)) + theme_classic()
 ```
 ---
-Phillidelphia Trip Duration 
+Philidelphia Trip Duration 
 ```{r histogram_of_tripduration_in_minutes_PH19, message=FALSE, warning=FALSE}
 ggplot(philly_trips) + geom_histogram(aes(duration, binwidth=4), fill="blue", alpha=0.4) + xlim(c(0, x.max)) + theme_classic()
 ```
