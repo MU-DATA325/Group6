@@ -139,5 +139,14 @@ ggplot(philly_trips) + geom_histogram(aes(duration, binwidth=4), fill="blue", al
 ```
 ---
 
+Boston Data
+``` {r boston_dataframe, message=FALSE}
+#testing
+summary(boston_data)
+
+```
+---
+
+
 
 

@@ -385,3 +385,10 @@ trips %>%
 trips %>%
   count(trip_route_category)
 ```
+
+``` {r boston_data}
+summary(boston_data)
+
+#quick summary of Boston dataframe 
+ 
+
