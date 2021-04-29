@@ -1,0 +1,56 @@
+---
+title: "Group 6 - Bikeshare"
+author: "Gorish, Ina, Ryan, Rachel"
+date: "4/29/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(skimr)
+library(readr)
+
+```
+
+```{r load-data boston, echo=FALSE}
+library(readr)
+boston_data <- read_csv("202101-bluebikes-tripdata.csv")
+View(boston_data)
+```
+```{r}
+glimpse(boston_data)
+
+```
+#better visualization for dataframe
+
+
+#Some visualization/relation experiments
+```{r}
+options(scipen = 999) #Rids of scientific notation
+boston_data %>%
+  ggplot(aes(x = `postal code`, y = tripduration, color = usertype)) +
+  geom_line()
+```
+```{r}
+plot(density(boston_data$`start station id`))
+
+```
+#plots like the one used above are good models for gauging scale
+
+```{r}
+ggplot(boston_data, aes(x = bikeid, y = tripduration)) +
+  geom_point(aes(color= usertype)) +
+  ylim(c(0,1500000))
+
+```
+
+#scatterplot visulizations like the one above are good tools for showcasing concentration, chose to limit Y-axis as there weren't too many ata points to omit.
+
+---
+Addressing the t-values & p-values for presentation
+
+
+
+
+
+

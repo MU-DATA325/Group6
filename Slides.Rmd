@@ -136,8 +136,32 @@ ggplot(trips) + geom_histogram(aes(duration, binwidth=4), fill="red", alpha=0.4)
 Philidelphia Trip Duration 
 ```{r histogram_of_tripduration_in_minutes_PH19, message=FALSE, warning=FALSE}
 ggplot(philly_trips) + geom_histogram(aes(duration, binwidth=4), fill="blue", alpha=0.4) + xlim(c(0, x.max)) + theme_classic()
+{r histogram_of_tripduration_in_minutes_PH19, message=FALSE, warning=FALSE}
+```
+---
+Prelim. Boston visualizations
+```{r}
+options(scipen = 999) #Rids of scientific notation
+boston_data %>%
+  ggplot(aes(x = `postal code`, y = tripduration, color = usertype)) +
+  geom_line()
+
 ```
 ---
 
+```{r}
+plot(density(boston_data$`start station id`))
 
+
+```
+
+---
+
+```{r}
+ggplot(boston_data, aes(x = bikeid, y = tripduration)) +
+  geom_point(aes(color= usertype)) +
+  ylim(c(0,1500000))
+```
+
+----
 
