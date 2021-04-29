@@ -45,7 +45,7 @@ philly_trips <- read_excel("philly trips.xlsx")
 parse_date_time("04-16-2021,1:09:20", orders = "mdy hms" )
 ```
 ---
-# Let's Look at the LA and Phili Data
+# Let's Look at the LA and Philly Data
 ```{r}
 names(trips)
 ```

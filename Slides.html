@@ -84,7 +84,7 @@ parse_date_time("04-16-2021,1:09:20", orders = "mdy hms" )
 ## [1] "2021-04-16 01:09:20 UTC"
 ```
 ---
-# Let's Look at the LA and Phili Data
+# Let's Look at the LA and Philly Data
 
 ```r
 names(trips)
@@ -204,7 +204,7 @@ ggplot(NY19) + geom_histogram(aes(`birth year`))
 ![](Slides_files/figure-html/plotting-the-histogram-of-the-birth-year-for-September-2019-1.png)&lt;!-- --&gt;
 
 ---
-# Slide Title
+# NYC Citibike Age
 
 
 ```r
@@ -234,7 +234,7 @@ ggplot(NY19) + geom_histogram(aes(tripduration))
 ![](Slides_files/figure-html/histogram-for-tripduration-in seconds-September-2019-1.png)&lt;!-- --&gt;
 
 ---
-# Slide Title
+# NYC Trip Duration
 
 
 ```r
@@ -270,7 +270,7 @@ ggplot(trips) + geom_histogram(aes(duration, binwidth=4), fill="red", alpha=0.4)
 
 ![](Slides_files/figure-html/histogram_of_tripduration_in_minutes_LA20-1.png)&lt;!-- --&gt;
 ---
-Phillidelphia Trip Duration 
+Philidelphia Trip Duration 
 
 ```r
 ggplot(philly_trips) + geom_histogram(aes(duration, binwidth=4), fill="blue", alpha=0.4) + xlim(c(0, x.max)) + theme_classic()
