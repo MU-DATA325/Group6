@@ -36,7 +36,7 @@ NYtripdata19 <- read_csv("JC-201909-citibike-tripdata.csv")
 NYtripdata20 <- read_csv("JC-202009-citibike-tripdata.csv")
 ```
 
-```{r Load-data phili, message=FALSE, warning=FALSE}
+```{r Load-data PH19}
 philly_trips <- read_excel("philly trips.xlsx")
 ```
 
@@ -44,7 +44,6 @@ philly_trips <- read_excel("philly trips.xlsx")
 ```{r message=FALSE, warning=FALSE}
 parse_date_time("04-16-2021,1:09:20", orders = "mdy hms" )
 ```
-
 ---
 # Let's Look at the LA and Phili Data
 ```{r}
@@ -111,12 +110,12 @@ ggplot(NY19) + geom_histogram(aes(tripduration))
 ---
 # Slide Title
 
-```{r histogram-adjusted-x-axis-for-tripduration-in seconds-September-2019 }
+```{r histogram-adjusted-x-axis-for-tripduration-in seconds-September-2019, message=FALSE, warning=FALSE}
 x.max <- quantile(NY19$tripduration, 0.99)
 ggplot(NY19) + geom_histogram(aes(tripduration)) + xlim(c(0, x.max))
 ```
 
-```{r creating- new-variable-tripduration-in-minutes-September-2019}
+```{r creating- new-variable-tripduration-in-minutes-September-2019, warning=FALSE}
 NY19  <- mutate(NY19, tripduration.min = tripduration/60)
 x.max <- quantile(NY19$tripduration.min, 0.99)
 ```
@@ -128,8 +127,17 @@ NY19$tripduration.min <- as.integer(NY19$tripduration.min)
 ```{r histogram-of-the-tripduration-in minutes-September-2019, message=FALSE, warning=FALSE}
 ggplot(NY19) + geom_histogram(aes(tripduration.min, binwidth=2), fill="darkgreen", alpha=0.4) + xlim(c(0, x.max)) + theme_classic()
 ```
-
-
+---
+LA Trip Duration 
+```{r histogram_of_tripduration_in_minutes_LA20, message=FALSE, warning=FALSE}
+ggplot(trips) + geom_histogram(aes(duration, binwidth=4), fill="red", alpha=0.4) + xlim(c(0, x.max)) + theme_classic()
+```
+---
+Phillidelphia Trip Duration 
+```{r histogram_of_tripduration_in_minutes_PH19, message=FALSE, warning=FALSE}
+ggplot(philly_trips) + geom_histogram(aes(duration, binwidth=4), fill="blue", alpha=0.4) + xlim(c(0, x.max)) + theme_classic()
+```
+---
 
 
 

@@ -73,6 +73,7 @@ NY19 <- NY19 %>% mutate(agegroup = case_when(age >= 61 & age <= 131 ~ '4',
                                              age >= 16  & age <= 29 ~ '1'))
 
 ```
+
 ```{r assigning-the-gender-variable-names-September-2019}
 NY19$gender     <- as.factor(NY19$gender)
 levels(NY19$gender) <- c("UNKNOWN", "MALE", "FEMALE")
@@ -89,7 +90,6 @@ head(NY19)
 ```
 
 
-
 ```{r calculate-statistics-for-age_category-September-2019 NY19}
 NY19 %>%  
  summarise(minimum_age=min(age),mean_age=mean(age),median_age=median(age), 
@@ -100,14 +100,17 @@ NY19 %>%
 NY19$tripduration <- as.integer(NY19$tripduration)
 ggplot(NY19) + geom_histogram(aes(tripduration))
 ```
+
 ```{r histogram-adjusted-x-axis-for-tripduration-in seconds-September-2019 }
 x.max <- quantile(NY19$tripduration, 0.99)
 ggplot(NY19) + geom_histogram(aes(tripduration)) + xlim(c(0, x.max))
 ```
+
 ```{r creating- new-variable-tripduration-in-minutes-September-2019}
 NY19  <- mutate(NY19, tripduration.min = tripduration/60)
 x.max <- quantile(NY19$tripduration.min, 0.99)
 ```
+
 ```{r defining-tripduration.min-as-integer-September-2019}
 NY19$tripduration.min <- as.integer(NY19$tripduration.min)
 ```
@@ -115,6 +118,17 @@ NY19$tripduration.min <- as.integer(NY19$tripduration.min)
 ```{r histogram-of-the-tripduration-in minutes-September-2019}
 ggplot(NY19) + geom_histogram(aes(tripduration.min, binwidth=2), fill="darkgreen", alpha=0.4) + xlim(c(0, x.max)) + theme_classic()
 ```
+
+```{r histogram_of_tripduration_in_minutes_LA20, message=FALSE, warning=FALSE}
+ggplot(trips) + geom_histogram(aes(duration, binwidth=2), fill="red", alpha=0.4) + xlim(c(0, x.max)) + theme_classic()
+```
+
+```{r histogram_of_tripduration_in_minutes_PH19, message=FALSE, warning=FALSE}
+ggplot(philly_trips) + geom_histogram(aes(duration, binwidth=2), fill="blue", alpha=0.4) + xlim(c(0, x.max)) + theme_classic()
+```
+
+
+###
 
 ```{r}
 glimpse(NY19)
@@ -126,14 +140,13 @@ NY19 %>%
  summarise(minimum_trdur=min(tripduration.min),mean_trdur=mean(tripduration.min),median_trdur=median(tripduration.min), 
             maximum_trdur=max(tripduration.min))
 ```
+
 ```{r calculate-statistics-for-tripduration-by-gender-September-2019 NY19}
 NY19 %>%
   group_by(gender) %>%
  summarize(minimum_trdur=min(tripduration),mean_trdur=mean(tripduration),median_trdur=median(tripduration), 
             maximum_trdur=max(tripduration))
 ```
-
-
 
 ```{r number-of-users-by-gender-September-2019 NY19}
 NY19 %>%
@@ -143,18 +156,20 @@ NY19 %>%
 ```{r bar-graph-proportion-of-gender-September-2019 }
 ggplot(NY19) + geom_bar(aes(gender, y = (..count..)/sum(..count..)), fill="orange") + ylab("Proportion") + theme_bw()
 ```
+
 ```{r age-distribution-for-male-female-September-2019}
 NY19 %>% filter(gender != "UNKNOWN") %>% ggplot(.)  + geom_density(aes(`birth year`,group=gender, fill=gender, colour=gender), adjust=3, alpha=0.1)
 ```
-
 
 ```{r number-of-users-by-usertype-September-2019 NY19}
 NY19 %>%
   count (usertype)
 ```
+
 ```{r bar-graph-count-of-usertypes-September-2019}
 ggplot(NY19) + geom_bar(aes(usertype), fill="white", colour="darkblue", width=0.2)
 ```
+
 ```{r bar-graph-proportion-of-usertypes-September-2019}
 ggplot(NY19) + geom_bar(aes(usertype, y = (..count..)/sum(..count..)), fill="white", colour="red", width=0.2) + ylab("Proportion")
 ```
@@ -166,6 +181,7 @@ NY19 %>%
             maximum_trdur=max(tripduration.min))
 
 ```
+
 ```{r graph-age-gender-September-2019}
 ggplot(NY19, aes(x=age,group=gender,colour=gender)) + geom_freqpoly(stat = "bin",size=1) 
 ```
@@ -175,9 +191,6 @@ ggplot(NY19, aes(x=age,y=tripduration.min ,colour=gender)) +
   stat_summary(fun.y="mean", geom="line", size=1) + facet_grid(gender ~ .) + 
   labs(title = "Relationship between Mean Trip Duration and Age per Gender", y="mean Trip Duration")
 ```
-
-
-
 
 ```{r column-graph-tripduration-usertype-September-2019 NY19}
 ggplot(data = NY19) + 
@@ -192,11 +205,9 @@ ggplot(NY19, aes(x=hour(NY19$starttime),fill=as.factor(hour(NY19$starttime))))+
   theme(legend.position = "none")
 ```
 
-
 ```{r bar-graph-percentage-of-trips-in-each-hour-of-the-day-by-usertype-September-2019}
 ggplot(NY19) + geom_bar(aes(x=hour(NY19$starttime), y=(..count..)/sum(..count..), fill=usertype)) + theme_bw() + ylab("") + scale_fill_manual(values=c("sienna1", "sienna"))
 ```
-
 
 ```{r count-top-ten-most-used-bikes-for-September-2019 NY19}
 NY19 %>%
